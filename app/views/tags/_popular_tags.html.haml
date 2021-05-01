@@ -1,0 +1,16 @@
+-#   Copyright (c) 2010-2011, Diaspora Inc.  This file is
+-#   licensed under the Affero General Public License version 3 or later.  See
+-#   the COPYRIGHT file.
+
+%h4
+  = t("popular_tags.title")
+.list-group
+  - tags.each do |tag|
+    = link_to "/tags/#{tag.name}", class: "list-group-item" do
+      %h4.list-group-item-heading
+        = "\##{tag.name}"
+      %p.list-group-item-text
+        - if tag.count > 5
+          = t("popular_tags.tag_count", count: tag.count)
+- if tags.empty?
+  = t("popular_tags.no_tags")

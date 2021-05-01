@@ -17,8 +17,8 @@
 
 .container-fluid
   .row
-    - if user_signed_in?
-      .col-md-3
+    .col-md-3
+      - if user_signed_in?
         .sidebar.left-navbar
           %ul#stream-selection
             %li{data: {stream: "stream"}}
@@ -42,7 +42,10 @@
                 = link_to t("streams.local_public.title"), local_public_stream_path, rel: "backbone", class: "hoverable"
             %li{data: {stream: "public"}}
               = link_to t("streams.public.title"), public_stream_path, rel: "backbone", class: "hoverable"
-
+        
+      .sidebar.info-bar.left-navbar.hidden-xs
+        = render "tags/popular_tags", tags: @popular_tags
+      - if user_signed_in?
         .sidebar.info-bar.hidden-xs
           - if AppConfig.settings.invitations.open?
             .section.collapsed
@@ -172,8 +175,7 @@
             .content
               .powered-by-diaspora.text-center
                 = link_to t("layouts.application.powered_by"), "https://diasporafoundation.org"
-
-    .col-md-9{class: ("center-block public-stream" unless user_signed_in?)}
+    .col-md-9
       .stream-container#aspect-stream-container
         - unless user_signed_in?
           %h2= @stream.title

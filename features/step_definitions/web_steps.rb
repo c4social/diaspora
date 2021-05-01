@@ -107,6 +107,10 @@ Then /^(?:|I )should see (\".+?\"[\s]*)(?:[\s]+within[\s]* "([^"]*)")?$/ do |var
   end
 end
 
+Then /^(?:|I )should see a Donate link within sidebar$/ do
+  find("div.sidebar.info-bar h5", text: "Donate")
+end
+
 Then /^(?:|I )should see \/([^\/]*)\/(?: within "([^"]*)")?$/ do |regexp, selector|
   regexp = Regexp.new(regexp)
   with_scope(selector) do

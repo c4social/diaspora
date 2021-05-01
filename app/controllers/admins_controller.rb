@@ -53,10 +53,10 @@ class AdminsController < Admin::AdminController
   def stats
     @popular_tags = ActsAsTaggableOn::Tagging.joins(:tag)
                                              .limit(50)
+                                             .where("taggable_type = ? and created_at >= ?",'Post', Time.zone.today - 1.day)
                                              .order(Arel.sql("count(taggings.id) DESC"))
                                              .group(:tag)
                                              .count
-
     case params[:range]
     when "week"
       range = 1.week

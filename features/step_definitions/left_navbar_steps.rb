@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 When /^(?:|I )click on "([^"]*)" navbar title$/ do |title|
-  with_scope(".info-bar") do
-    find("h5", text: title).click
-  end
+  find(".info-bar h5", text: title).click
 end
 
 Given /^I have configured a Bitcoin address$/ do
