@@ -1,0 +1,16 @@
+- content_for :head do
+  = stylesheet_link_tag :admin
+
+.row
+  .user_search.col-md-12
+    %h3= t("admins.admin_bar.tags_board")
+.row
+  = form_with model: @new_tag_prototype, html: {class: "form-inline"} do |tag|
+    .form-group
+      = tag.label :name, "New tag to ignore:", class: "control-label"
+      = tag.text_field :name, class: "form-control"
+    = submit_tag "Create", class: "btn btn-primary"
+%p
+  %ul.list-unstyled
+    - @ignoring_tags.each do |tag|
+      = render partial: "admins/ignored_tag", locals: {tag: tag}
