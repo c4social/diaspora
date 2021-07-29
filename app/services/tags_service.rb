@@ -6,7 +6,8 @@ class TagsService
     popular_tags_simplified.each do |synonym|
       tags_collection.push(Tag.new(synonym[1][:stem_word], synonym[1][:count]))
     end
-    tags_collection
+    tags_collection.sort_by(&:count).take(10)
+
   end
 
   def popular_tags_simplified
@@ -35,7 +36,7 @@ class TagsService
             and not exists (Select 1 from ignoring_tags as it where it.name = tags.name)
             group by tags.name, author_id order by tags.name asc) as t group by t.name
             order by count desc
-            limit 10"
+            limit 50"
   end
 
   class Tag
