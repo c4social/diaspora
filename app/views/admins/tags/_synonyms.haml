@@ -1,0 +1,29 @@
+.tag-synonyms
+  = form_with model: @synonyms_prototype, html: {class: "form-inline"} do |synonym|
+    .form-group
+      = synonym.label :synonym, "Synonym", class: "control-label"
+      = synonym.text_field :synonym, class: "form-control"
+    .form-group
+      = synonym.label :tag_name, class: "control-label"
+      = synonym.text_field :tag_name, class: "form-control"
+    = submit_tag "Create", class: "btn btn-primary"
+
+  %table.table.synonyms-tag-table
+    %thead
+      %th
+        Synonym
+        %span.fr
+          →
+      %th
+        Target
+    %tbody
+    - @synonyms.each do |synonym|
+      %tr
+        %td
+          .tag
+            = synonym.synonym
+        %td
+          .tag
+            = synonym.tag_name
+        %td
+          = link_to "Delete", tag_synonym_path(synonym), method: :delete, class: "btn btn-danger btn-sm"

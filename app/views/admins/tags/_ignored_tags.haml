@@ -1,0 +1,19 @@
+.tag-ignored
+  = form_with model: @new_tag_prototype, html: {class: "form-inline"} do |tag|
+    .form-group
+      = tag.label :name, "New tag to ignore:", class: "control-label"
+      = tag.text_field :name, class: "form-control"
+    = submit_tag "Create", class: "btn btn-primary"
+
+  %table.table.ignored-tag-table
+    %thead
+      %th
+        Ignored Tag
+    %tbody
+      - @ignoring_tags.each do |tag|
+        %tr
+          %td
+            .tag
+              = tag.name
+          %td
+            = link_to "Delete", ignoring_tag_path(tag), method: :delete, class: "btn btn-danger btn-sm"

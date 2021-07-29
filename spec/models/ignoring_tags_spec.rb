@@ -1,5 +1,8 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
-RSpec.describe IgnoringTags, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+describe IgnoringTag, type: :model do
+  it "normalized tags before storing" do
+    ignored_tag = IgnoringTag.create(name: "   #To_Be_Ignored  ")
+    expect(ignored_tag.name).to eq("to_be_ignored")
+  end
 end
