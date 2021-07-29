@@ -6,8 +6,7 @@ class TagsService
     popular_tags_simplified.each do |synonym|
       tags_collection.push(Tag.new(synonym[1][:stem_word], synonym[1][:count]))
     end
-    tags_collection.sort_by(&:count).take(10)
-
+    tags_collection.sort_by(&:count).reverse.take(10)
   end
 
   def popular_tags_simplified
