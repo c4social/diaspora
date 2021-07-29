@@ -72,7 +72,7 @@ class StreamsController < ApplicationController
       @stream ||= stream_klass.new(current_user, :max_time => max_time)
     end
 
-    @popular_tags = tags_service.popular_tags
+    @popular_tags = tags_service.popular_tags_aligned
     respond_with do |format|
       format.html { render 'streams/main_stream' }
       format.mobile { render 'streams/main_stream' }
