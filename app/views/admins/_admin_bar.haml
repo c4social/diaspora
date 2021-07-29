@@ -8,6 +8,8 @@
     = link_to t(".weekly_user_stats"), weekly_user_stats_path
   %li{role: "presentation", class: current_page?(pod_stats_path) && "active"}
     = link_to t(".pod_stats"), pod_stats_path
+  %li{role: "presentation", class: current_page?(admin_tags_path) && "active"}
+    = link_to t(".tags_board"), admin_tags_path
   %li{role: "presentation", class: current_page?(report_index_path) && "active"}
     %a{href: report_index_path}
       - if unreviewed_reports_count > 0

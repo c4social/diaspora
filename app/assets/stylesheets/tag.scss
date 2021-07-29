@@ -49,3 +49,35 @@ h1.tag {
     }
   }
 }
+.tag-synonyms,
+.tag-ignored {
+  margin-top: 15px;
+}
+
+.synonyms-tag-table,
+.ignored-tag-table {
+  .fr {
+    float: right;
+    font-size: 2.5rem;
+    font-weight: bold;
+    line-height: 20px;
+    margin-right: 40px;
+  }
+
+  .tag {
+    background-color: $tag-label-background-color;
+    border-color: transparent;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    color: $tag-label-color;
+    cursor: pointer;
+    font-size: 11px;
+    line-height: 1px;
+    margin: 2px;
+    padding: .8em;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+}

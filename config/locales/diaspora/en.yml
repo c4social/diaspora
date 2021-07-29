@@ -97,6 +97,7 @@ en:
       user_search: "User search"
       weekly_user_stats: "Weekly user stats"
       pod_stats: "Pod stats"
+      tags_board: "Taggings"
       report: "Reports"
       sidekiq_monitor: "Sidekiq monitor"
       pod_network: "Pod network"

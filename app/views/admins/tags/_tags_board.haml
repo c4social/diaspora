@@ -1,0 +1,19 @@
+- content_for :head do
+  = stylesheet_link_tag :admin
+
+%h3
+  = t("admins.admin_bar.tags_board")
+%ul.nav.nav-tabs{role: "tablist"}
+  %li.nav-item.active{role: "presentation"}
+    %a{href: "#synonyms", title: "Tag Synonyms",
+       aria: {controls: "synonyms", selected: true}, data: {toggle: "tab"}}
+      Synonyms
+  %li.nav-item{role: "presentation"}
+    %a{href: "#ignored-tags", title: "Ignored Tags",
+       aria: {controls: "ignored-tags", selected: false}, data: {toggle: "tab"}}
+      Ignored Tags
+.tab-content
+  .tab-pane.active#synonyms{role: "tabpanel"}
+    = render partial: "admins/tags/synonyms"
+  .tab-pane#ignored-tags{role: "tabpanel"}
+    = render partial: "admins/tags/ignored_tags"

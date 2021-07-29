@@ -149,6 +149,10 @@ Rails.application.routes.draw do
     get "add_invites/:invite_code_id" => "admins#add_invites", :as => "add_invites"
   end
 
+  resources :admin_tags, scope: "admins/tags", only: %i[index]
+  resources :ignoring_tags, scope: "admins/tags", only: %i[create destroy]
+  resources :tag_synonyms, scope: "admins/synonym_tags", only: %i[create destroy]
+
   namespace :admin do
     resources :pods, only: %i[index update] do
       post :recheck

@@ -72,7 +72,7 @@ class StreamsController < ApplicationController
       @stream ||= stream_klass.new(current_user, :max_time => max_time)
     end
 
-    @popular_tags = popular_tags
+    @popular_tags = tags_service.popular_tags_aligned
     respond_with do |format|
       format.html { render 'streams/main_stream' }
       format.mobile { render 'streams/main_stream' }
@@ -86,18 +86,7 @@ class StreamsController < ApplicationController
     end
   end
 
-  # Returns popular public tags by tags used in a timespan, only one count per pos creator
-  # Prohibites flooding tags from mass uploading bots
-  def popular_tags
-    time_span = Time.zone.today - 1.day
-    ActsAsTaggableOn::Tagging.find_by_sql "select count(*) as count, t.name from
-          (select tags.name, posts.author_id from taggings
-            left join tags on taggings.tag_id = tags.id
-            left join posts on posts.id = taggable_id
-            where taggable_type = 'Post' and posts.created_at >= '#{time_span}'
-            and posts.public = true
-            group by tags.name, author_id order by tags.name asc) as t group by t.name
-            order by count desc
-            limit 10"
+  def tags_service
+    @tags_service ||= TagsService.new
   end
 end
