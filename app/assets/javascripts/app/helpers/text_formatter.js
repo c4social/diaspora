@@ -2,21 +2,24 @@
 
 (function(){
   app.helpers.allowedEmbedsMime = function(mimetype) {
-    var v = document.createElement(mimetype[1]);
+    let v = document.createElement(mimetype[1]);
     return v.canPlayType && v.canPlayType(mimetype[0]) !== "";
   };
 
   app.helpers.textFormatter = function(text, mentions) {
     mentions = mentions ? mentions : [];
 
-    var md = window.markdownit({
+    let md = window.markdownit({
       breaks:      true,
       html:        true,
       linkify:     true,
       typographer: true
     });
 
-    var inlinePlugin = window.markdownitForInline;
+    let footnote = window.markdownitFootnote;
+    md.use(footnote);
+
+    let inlinePlugin = window.markdownitForInline;
     md.use(inlinePlugin, "utf8_symbols", "text", function (tokens, idx) {
       tokens[idx].content = tokens[idx].content.replace(/<->/g, "↔")
                                                .replace(/<-/g,  "←")
@@ -38,7 +41,7 @@
       tokens[idx].attrPush(["class", "img-responsive"]);
     });
 
-    var hashtagPlugin = window.markdownitHashtag;
+    let hashtagPlugin = window.markdownitHashtag;
     md.use(hashtagPlugin, {
       // compare tag_text_regexp in app/models/acts_as_taggable_on-tag.rb
       hashtagRegExp: "[" + PosixBracketExpressions.word +
@@ -53,21 +56,21 @@
       preceding: "^|\\s"
     });
 
-    var mentionPlugin = window.markdownitDiasporaMention;
+    let mentionPlugin = window.markdownitDiasporaMention;
     md.use(mentionPlugin, {
       mentions: mentions,
       allowHovercards: true,
       currentUserId: app.currentUser.get("guid")
     });
 
-    var subPlugin = window.markdownitSub;
+    let subPlugin = window.markdownitSub;
     md.use(subPlugin);
-    var supPlugin = window.markdownitSup;
+    let supPlugin = window.markdownitSup;
     md.use(supPlugin);
-    var sanitizerPlugin = window.markdownitSanitizer;
+    let sanitizerPlugin = window.markdownitSanitizer;
     md.use(sanitizerPlugin, {imageClass: "img-responsive"});
 
-    var hljs = window.hljs;
+    let hljs = window.hljs;
     md.set({
       highlight: function(str, lang) {
         if (lang && hljs.getLanguage(lang)) {
@@ -89,7 +92,7 @@
     // Bootstrap table markup
     md.renderer.rules.table_open = function () { return "<table class=\"table table-striped\">\n"; };
 
-    var html5medialPlugin = window.markdownitHTML5Embed;
+    let html5medialPlugin = window.markdownitHTML5Embed;
     md.use(html5medialPlugin, {html5embed: {
       inline: false,
       autoAppend: true,
