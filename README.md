@@ -24,9 +24,13 @@ Learn more at [C4Social.org](https://c4social.org)
 
 ## Installation
 
+
 You don't have to install diaspora\* to use the network. There are many servers connected to diaspora\*s network which are open to anyone, and you can create an account on one of these servers. Have a look at our [tips for finding a home](https://wiki.diasporafoundation.org/Choosing_a_pod), or you can just go straight to the [list of open servers](https://diaspora.podupti.me) to sign up.
 
 Want to own your data and install diaspora\*? Whether you just want to try it out, want to install it on your server or want to contribute and need a development setup, our [installation guide](INSTALLING.md) will get you started!
+
+Please see [Production-Installation.md](/docs/Production-Installation.md).
+
 
 ## Questions?
 

@@ -43,13 +43,33 @@ jobs:
         ports:
           - 5432:5432
     steps:
+      - id: timestamp
+        run: echo "::set-output name=timestamp::$(date +%s)"
+
+      - name: Restore the previous run result
+        uses: actions/cache@v2
+        with:
+          path: |
+            run_result
+          key: ${{ github.run_id }}-${{ matrix.ruby }}-${{ matrix.db }}-${{ matrix.kind }}-${{ steps.timestamp.outputs.timestamp }}
+          restore-keys: |
+            ${{ github.run_id }}-${{ matrix.ruby }}-${{ matrix.db }}-${{ matrix.kind }}-
+      - name: Get the previous run result
+        id: run_result
+        run: cat run_result 2>/dev/null || echo 'default'
+
+      - if: steps.run_result.outputs.run_result == 'success'
+        run: echo "Job already passed, skipping..." && exit 0
+
       - name: Install system dependencies
         run: sudo apt update && sudo apt install -y build-essential curl git gsfonts imagemagick libcurl4-openssl-dev libidn11-dev libmagickwand-dev libssl-dev libxml2-dev libxslt1-dev
       - name: Start MySQL
         run: sudo systemctl start mysql.service
         if: matrix.db == 'mysql'
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2      
+      
       - uses: ruby/setup-ruby@v1
+        
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
@@ -61,3 +81,5 @@ jobs:
         run: bin/rake jasmine:ci
         timeout-minutes: 2
         if: matrix.kind == 'other'
+
+      - run: echo "::set-output name=run_result::success" > run_result

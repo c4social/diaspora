@@ -26,6 +26,7 @@ services:
     command: bin/bundle exec unicorn -c config/unicorn.rb -E production
     volumes:
       - ./data:/diaspora/public/
+      - ./tmp:/diaspora/tmp/
       - ./config/diaspora.toml:/diaspora/config/diaspora.toml
       - ./config/database.yml:/diaspora/config/database.yml
     depends_on:
