@@ -96,7 +96,7 @@ class User < ApplicationRecord
 
   before_save :guard_unconfirmed_email
 
-  after_save :remove_invalid_unconfirmed_emails
+  after_save :remove_invalid_unconfirmed_emails, :verify_default_admin!
 
   before_destroy do
     raise "Never destroy users!"
@@ -597,6 +597,16 @@ class User < ApplicationRecord
 
   def remember_me
     true
+  end
+
+  def verify_default_admin!
+    if is_initial_user?
+      Role.add_admin(self)
+    end
+  end
+
+  def is_initial_user?
+    User.count == 1
   end
 
   private
